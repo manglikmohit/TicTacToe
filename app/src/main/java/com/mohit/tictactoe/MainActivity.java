@@ -1,5 +1,6 @@
 package com.mohit.tictactoe;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -14,6 +15,7 @@ public class MainActivity extends AppCompatActivity {
     String current_move = X;
 
     int move_count = 0;
+    private boolean isGameActive = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,25 +26,36 @@ public class MainActivity extends AppCompatActivity {
 
     void init() {
         btn1 = findViewById(R.id.btn1);
-        btn2 = findViewById(R.id.btn1);
-        btn3 = findViewById(R.id.btn1);
-        btn4 = findViewById(R.id.btn1);
-        btn5 = findViewById(R.id.btn1);
-        btn6 = findViewById(R.id.btn1);
-        btn7 = findViewById(R.id.btn1);
-        btn8 = findViewById(R.id.btn1);
-        btn9 = findViewById(R.id.btn1);
+        btn2 = findViewById(R.id.btn2);
+        btn3 = findViewById(R.id.btn3);
+        btn4 = findViewById(R.id.btn4);
+        btn5 = findViewById(R.id.btn5);
+        btn6 = findViewById(R.id.btn6);
+        btn7 = findViewById(R.id.btn7);
+        btn8 = findViewById(R.id.btn8);
+        btn9 = findViewById(R.id.btn9);
     }
 
     public void check(View view) {
-        move_count++;
         Button btn = (Button) view;
+        if(btn.getText().toString() != "" || !isGameActive)
+            return;
+
+        move_count++;
+
         ((Button) view).setText(current_move);
+
+        if (btn.getText().toString().equals(X)) {
+            btn.setBackgroundColor(Color.CYAN);
+        } else {
+            btn.setBackgroundColor(Color.YELLOW);
+        }
 
 
         if (move_count > 4) {
             if (checkWin()) {
                 Toast.makeText(this, "winner is " + btn.getText(), Toast.LENGTH_SHORT).show();
+                isGameActive = false;
             }
         }
 
@@ -50,8 +63,37 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "Draw", Toast.LENGTH_SHORT).show();
         }
 
-        btn.setActivated(false);
         toggleCurrentMove();
+    }
+
+    public  void reset(View view){
+        reset();
+    }
+
+    public  void reset(){
+        btn1.setText("");
+        btn2.setText("");
+        btn3.setText("");
+        btn4.setText("");
+        btn5.setText("");
+        btn6.setText("");
+        btn7.setText("");
+        btn8.setText("");
+        btn9.setText("");
+
+        btn1.setBackgroundColor(Color.GREEN);
+        btn2.setBackgroundColor(Color.GREEN);
+        btn3.setBackgroundColor(Color.GREEN);
+        btn4.setBackgroundColor(Color.GREEN);
+        btn5.setBackgroundColor(Color.GREEN);
+        btn6.setBackgroundColor(Color.GREEN);
+        btn7.setBackgroundColor(Color.GREEN);
+        btn8.setBackgroundColor(Color.GREEN);
+        btn9.setBackgroundColor(Color.GREEN);
+
+        move_count = 0;
+        current_move=X;
+        isGameActive = true;
     }
 
     private boolean checkWin() {
