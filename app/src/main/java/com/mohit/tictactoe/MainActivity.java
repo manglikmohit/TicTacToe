@@ -4,17 +4,22 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
     Button btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9;
+
+    TextView tvCurrentUser;
     String X = "X";
     String O = "O";
     String current_move = X;
 
     int move_count = 0;
+    String fUser, sUser;
     private boolean isGameActive = true;
 
     @Override
@@ -34,14 +39,22 @@ public class MainActivity extends AppCompatActivity {
         btn7 = findViewById(R.id.btn7);
         btn8 = findViewById(R.id.btn8);
         btn9 = findViewById(R.id.btn9);
+
+        tvCurrentUser = findViewById(R.id.tvCurrentUser);
+
+        fUser = ((EditText) findViewById(R.id.etFirstUserName)).getText().toString();
+        sUser = ((EditText) findViewById(R.id.etSecondUserName)).getText().toString();
+
+        tvCurrentUser.setText(fUser + "'s turn");
     }
 
     public void check(View view) {
         Button btn = (Button) view;
-        if(btn.getText().toString() != "" || !isGameActive)
+        if (btn.getText().toString() != "" || !isGameActive)
             return;
 
         move_count++;
+
 
         ((Button) view).setText(current_move);
 
@@ -64,13 +77,18 @@ public class MainActivity extends AppCompatActivity {
         }
 
         toggleCurrentMove();
+
+        if (move_count % 2 == 0)
+            tvCurrentUser.setText(fUser + "'s turn");
+        else
+            tvCurrentUser.setText(sUser + "'s turn");
     }
 
-    public  void reset(View view){
+    public void reset(View view) {
         reset();
     }
 
-    public  void reset(){
+    public void reset() {
         btn1.setText("");
         btn2.setText("");
         btn3.setText("");
@@ -92,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
         btn9.setBackgroundColor(Color.GREEN);
 
         move_count = 0;
-        current_move=X;
+        current_move = X;
         isGameActive = true;
     }
 
