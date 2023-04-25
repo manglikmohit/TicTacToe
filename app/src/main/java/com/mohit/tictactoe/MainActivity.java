@@ -1,5 +1,6 @@
 package com.mohit.tictactoe;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -14,18 +15,21 @@ public class MainActivity extends AppCompatActivity {
     Button btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9;
 
     TextView tvCurrentUser;
+    String currentUser;
     String X = "X";
     String O = "O";
     String current_move = X;
 
     int move_count = 0;
-    String fUser, sUser;
     private boolean isGameActive = true;
-
+    Intent intent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        intent = getIntent();
+
         init();
     }
 
@@ -42,10 +46,9 @@ public class MainActivity extends AppCompatActivity {
 
         tvCurrentUser = findViewById(R.id.tvCurrentUser);
 
-        fUser = ((EditText) findViewById(R.id.etFirstUserName)).getText().toString();
-        sUser = ((EditText) findViewById(R.id.etSecondUserName)).getText().toString();
 
-        tvCurrentUser.setText(fUser + "'s turn");
+        currentUser=intent.getStringExtra("first_name");
+        tvCurrentUser.setText(currentUser + "'s turn");
     }
 
     public void check(View view) {
@@ -67,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (move_count > 4) {
             if (checkWin()) {
-                Toast.makeText(this, "winner is " + btn.getText(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "winner is " + currentUser, Toast.LENGTH_SHORT).show();
                 isGameActive = false;
             }
         }
@@ -79,9 +82,12 @@ public class MainActivity extends AppCompatActivity {
         toggleCurrentMove();
 
         if (move_count % 2 == 0)
-            tvCurrentUser.setText(fUser + "'s turn");
+            currentUser = intent.getStringExtra("first_name");
         else
-            tvCurrentUser.setText(sUser + "'s turn");
+            currentUser = intent.getStringExtra("second_name");
+
+
+        tvCurrentUser.setText(currentUser + "'s turn");
     }
 
     public void reset(View view) {
