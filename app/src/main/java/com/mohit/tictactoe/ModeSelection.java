@@ -29,7 +29,7 @@ public class ModeSelection extends AppCompatActivity {
 
         ListView lvMode = findViewById(R.id.lvMode);
 
-        ArrayAdapter<String> modeAdapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_single_choice, arrayListModes);
+        ArrayAdapter<String> modeAdapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1, arrayListModes);
         lvMode.setAdapter(modeAdapter);
 
         lvMode.setOnItemClickListener(new AdapterView.OnItemClickListener() {
